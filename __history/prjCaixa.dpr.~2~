@@ -1,0 +1,14 @@
+program prjCaixa;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  principalUnt in 'principalUnt.pas' {principalFrm};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TprincipalFrm, principalFrm);
+  Application.Run;
+end.

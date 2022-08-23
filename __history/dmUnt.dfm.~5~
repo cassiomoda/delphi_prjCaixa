@@ -1,0 +1,16 @@
+object dm: Tdm
+  OldCreateOrder = False
+  Height = 247
+  Width = 299
+  object conn: TFDConnection
+    Params.Strings = (
+      'DriverID=FB'
+      'User_Name=SYSDBA'
+      'Password=Tigre401!'
+      'Database=C:\dev\delphi\prjCaixa\db\CAIXA.FDB'
+      'Server=localhost')
+    LoginPrompt = False
+    Left = 24
+    Top = 16
+  end
+end

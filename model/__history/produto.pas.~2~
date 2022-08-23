@@ -1,0 +1,27 @@
+unit produto;
+
+interface
+
+type
+  TProduto = class
+
+  private
+    FCodigo: integer;
+    FNome: string;
+    FPreco: double;
+    FCodUnidadeMedida: string;
+    FTipoProduto: string;
+
+    procedure setCodigo(PCodigo: integer);
+    procedure setNome(PNome: string);
+    procedure setPreco(PPreco: double);
+    procedure setCodUnidadeMedida(PCodUnidadeMedida: string);
+    procedure setTipoProduto(PTipoProduto: string);
+
+  public
+
+end;
+
+implementation
+
+end.

@@ -1,0 +1,43 @@
+unit dmUnt;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.FMXUI.Wait,
+  Data.DB, FireDAC.Comp.Client, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet;
+
+type
+  Tdm = class(TDataModule)
+    conn: TFDConnection;
+    produtosTr: TFDTransaction;
+    produtosQry: TFDQuery;
+    produtosQryCODIGO: TIntegerField;
+    produtosQryNOME: TStringField;
+    produtosQryPRECO: TFloatField;
+    produtosQryCODUNIDADEMEDIDA: TStringField;
+    produtosQryTIPOPRODUTO: TStringField;
+    unidadesMedidaTr: TFDTransaction;
+    unidadesMedidaQry: TFDQuery;
+    unidadesMedidaQryCODIGO: TStringField;
+    unidadesMedidaQryNOME: TStringField;
+    tiposProdutoTr: TFDTransaction;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dm: Tdm;
+
+implementation
+
+{%CLASSGROUP 'FMX.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

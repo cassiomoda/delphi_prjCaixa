@@ -1,0 +1,35 @@
+unit produto;
+
+interface
+
+type
+  TProduto = class
+
+  private
+    FCodigo: integer;
+    FNome: string;
+    FPreco: double;
+    FCodUnidadeMedida: string;
+    FTipoProduto: string;
+
+    constructor Create;
+    procedure setCodigo(PCodigo: integer);
+    procedure setNome(PNome: string);
+    procedure setPreco(PPreco: double);
+    procedure setCodUnidadeMedida(PCodUnidadeMedida: string);
+    procedure setTipoProduto(PTipoProduto: string);
+
+  public
+
+end;
+
+implementation
+
+{TProduto}
+
+constructor TProduto.Create;
+begin
+
+end;
+
+end.

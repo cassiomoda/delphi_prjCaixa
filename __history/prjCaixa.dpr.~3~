@@ -1,0 +1,16 @@
+program prjCaixa;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  principalUnt in 'principalUnt.pas' {principalFrm},
+  dmUnt in 'dmUnt.pas' {dm: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TprincipalFrm, principalFrm);
+  Application.CreateForm(Tdm, dm);
+  Application.Run;
+end.
