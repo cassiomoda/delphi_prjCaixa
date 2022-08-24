@@ -1,0 +1,45 @@
+unit itemConsumido;
+
+interface
+
+type
+  TItemConsumido = class
+
+  private
+    FCodigo: integer;
+    FNome: string;
+    FQuantidade: double;
+    FCodUnidadeMedida: string;
+    FTotal: double;
+
+    constructor Create;
+    procedure setCodigo(value: integer);
+    procedure setNome(value: string);
+    procedure setQuantidade(value: double);
+    procedure setCodUnidadeMedida(value: string);
+    procedure setTotal(value: double);
+
+  public
+
+  published
+
+
+end;
+
+implementation
+
+{TItemConsumido}
+
+constructor TItemConsumido.Create;
+begin
+  FCodigo := 0;
+  FNome := '';
+  FQuantidade := 0;
+  FCodUnidadeMedida := '';
+  FTotal := 0;
+end;
+
+initialization
+  TItemConsumido.ClassName;
+
+end.

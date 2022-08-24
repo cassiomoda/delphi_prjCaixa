@@ -8,7 +8,8 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.FMXUI.Wait,
   Data.DB, FireDAC.Comp.Client, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.VCLUI.Wait, System.IniFiles;
+  FireDAC.Comp.DataSet, FireDAC.VCLUI.Wait, System.IniFiles, conta,
+  itemConsumido, Data.SqlTimSt;
 
 type
   Tdm = class(TDataModule)
@@ -27,11 +28,29 @@ type
     tiposProdutoTr: TFDTransaction;
     tiposProdutoQry: TFDQuery;
     tiposProdutoQryNOME: TStringField;
+    contasTr: TFDTransaction;
+    contasQry: TFDQuery;
+    contasQryCODIGO: TStringField;
+    contasQryNOME: TStringField;
+    contasQryDATA: TSQLTimeStampField;
+    itensContaQry: TFDQuery;
+    itensContaQryCODCONTA: TStringField;
+    itensContaQryCODPRODUTO: TIntegerField;
+    itensContaQryQUANTIDADE: TFloatField;
+    itensContaQrySUBTOTAL: TFloatField;
+    produtosSource: TDataSource;
+    unidadesMedidaSource: TDataSource;
+    tiposProdutoSource: TDataSource;
+    contasSource: TDataSource;
+    itensContaSource: TDataSource;
   private
     { Private declarations }
   public
     { Public declarations }
     function connectDB(appPath: string): boolean;
+    function gerarCodConta(): string;
+    function gravarConta(conta: TConta): boolean;
+    function getListaContas(): TList;
   end;
 
 var
@@ -61,6 +80,171 @@ begin
     result := conn.Connected;
   except
     result := false;
+  end;
+end;
+
+function Tdm.gerarCodConta(): string;
+var
+  dataHojeStr: string;
+  finalCod: string;
+begin
+  try
+    dataHojeStr := FormatDateTime('yyyyMMdd', Now);
+    finalCod := '1';
+
+    try
+      contasQry.Close;
+      contasQry.SQL.Clear;
+      contasQry.SQL.Text := ' SELECT * FROM contas '
+        + ' WHERE codigo LIKE ' + QuotedStr(dataHojeStr + '%')
+        + ' ORDER BY codigo DESC ';
+      contasQry.Open;
+
+      if (contasQryCODIGO.Value <> '') then
+      begin
+        finalCod := IntToStr(StrToInt(Copy(
+          contasQryCODIGO.Value,
+          Length(dataHojeStr) + 1,
+          Length(contasQryCODIGO.Value)
+        )) + 1);
+      end;
+    except
+    end;
+  finally
+    contasQry.Close;
+
+    result := dataHojeStr + finalCod;
+  end;
+end;
+
+function Tdm.gravarConta(conta: TConta): boolean;
+var
+  index: integer;
+  itemConsumido: TItemConsumido;
+begin
+  result := false;
+
+  if (conta.Codigo <> '') and
+     (conta.Items.Count > 0) then
+  begin
+    try
+      try
+        contasTr.StartTransaction;
+
+        contasQry.Close;
+        contasQry.SQL.Clear;
+        contasQry.SQL.Text := ' SELECT * FROM contas '
+          + ' WHERE codigo = ' + QuotedStr(conta.Codigo);
+        contasQry.Open;
+
+        if (contasQry.Eof) then
+        begin
+          contasQry.Insert;
+          contasQryCODIGO.Value := conta.Codigo;
+        end
+        else
+          contasQry.Edit;
+
+        contasQryNOME.Value := conta.Nome;
+        contasQryDATA.Value := DateTimeToSQLTimeStamp(conta.Data);
+        contasQry.Post;
+        contasQry.ApplyUpdates;
+
+        for index := 0 to conta.Items.Count - 1 do
+        begin
+          itemConsumido := conta.Items[index];
+
+          itensContaQry.Close;
+          itensContaQry.SQL.Clear;
+          itensContaQry.SQL.Text := ' SELECT * FROM itens_conta '
+            + ' WHERE codConta = ' + QuotedStr(conta.Codigo)
+            + ' AND codProduto = ' + IntToStr(itemConsumido.Codigo);
+          itensContaQry.Open;
+
+          if (itensContaQry.Eof) then
+          begin
+            itensContaQry.Insert;
+            itensContaQryCODCONTA.Value := conta.Codigo;
+            itensContaQryCODPRODUTO.Value := itemConsumido.Codigo;
+          end
+          else
+            itensContaQry.Edit;
+
+          itensContaQryQUANTIDADE.Value := itemConsumido.Quantidade;
+          itensContaQrySUBTOTAL.Value := itemconsumido.Total;
+          itensContaQry.Post;
+          itensContaQry.ApplyUpdates;
+        end;
+
+        contasTr.Commit;
+        result := true;
+      except
+        contasTr.Rollback;
+      end;
+    finally
+      contasQry.Close;
+    end;
+  end;
+end;
+
+function Tdm.getListaContas(): TList;
+var
+  conta: TConta;
+  itemConsumido: TItemConsumido;
+begin
+  result := TList.Create;
+
+  try
+    produtosQry.Close;
+    produtosQry.SQL.Clear;
+    produtosQry.SQL.Text := ' SELECT * FROM produtos ';
+
+    contasQry.Close;
+    contasQry.SQL.Clear;
+    contasQry.SQL.Text := ' SELECT * FROM contas ';
+    contasQry.Open;
+
+    while not contasQry.Eof do
+    begin
+      conta := TConta.Create;
+      conta.Codigo := contasQryCODIGO.Value;
+      conta.Nome := contasQryNOME.Value;
+      conta.Data := SQLTimeStampToDateTime(contasQryDATA.Value);
+
+      itensContaQry.Close;
+      itensContaQry.SQL.Clear;
+      itensContaQry.SQL.Text := ' SELECT * FROM itens_conta '
+        + ' WHERE codConta = ' + QuotedStr(conta.Codigo);
+      itensContaQry.Open;
+
+      while not itensContaQry.Eof do
+      begin
+        itemConsumido := TItemConsumido.Create;
+        itemConsumido.Codigo := itensContaQryCODPRODUTO.Value;
+        itemConsumido.Quantidade := itensContaQryQUANTIDADE.Value;
+        itemConsumido.Total := itensContaQrySUBTOTAL.Value;
+
+        if not produtosQry.Active then
+          produtosQry.Open;
+
+        produtosQry.Filtered := false;
+        produtosQry.Filter := 'codigo = ' + IntToStr(itemConsumido.Codigo);
+        produtosQry.Filtered := true;
+
+        itemConsumido.Nome := produtosQryNOME.Value;
+
+        itensContaQry.Next;
+      end;
+
+      result.Add(conta);
+      contasQry.Next;
+    end;
+  finally
+    itensContaQry.Close;
+    contasQry.Close;
+    produtosQry.Filter := '';
+    produtosQry.Filtered := false;
+    produtosQry.Close;
   end;
 end;
 

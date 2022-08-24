@@ -6,11 +6,10 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, Vcl.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts, FMX.ListBox,
-  FMX.Edit, dmUnt, produto;
+  FMX.Edit, dmUnt, produto, itemConsumido, conta, contasUnt, estilosUnt;
 
 type
   TprincipalFrm = class(TForm)
-    principalSTB: TStyleBook;
     tituloPnl: TPanel;
     tituloTxt: TText;
     rodapeLyt: TLayout;
@@ -49,16 +48,23 @@ type
     procedure novaContaBtnClick(Sender: TObject);
     procedure produtosListDblClick(Sender: TObject);
     procedure okBtnClick(Sender: TObject);
+    procedure itensListDblClick(Sender: TObject);
+    procedure cancelarBtnClick(Sender: TObject);
+    procedure quantidadeEdtKeyDown(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
+    procedure produtosListKeyDown(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
+    procedure salvarBtnClick(Sender: TObject);
+    procedure contasBtnClick(Sender: TObject);
   private
     { Private declarations }
     produtoSelecionado: TProduto;
-    total: double;
 
     function atualizarListaProdutos(): boolean;
-    function novoCodigoConta(): string;
     function getProdutoLista(linhaSelecionada: string): TProduto;
-    function completarComEspacos(str: string; qtdMax: integer): string;
+    function getItemConsumido(linhaSelecionada: string): TItemConsumido;
     procedure atualizarTotal();
+    procedure limparTela();
   public
     { Public declarations }
   end;
@@ -116,15 +122,11 @@ begin
   end;
 end;
 
-function TprincipalFrm.novoCodigoConta(): string;
-begin
-  result := FormatDateTime('yyyyMMdd', Now) + '1';
-end;
-
 procedure TprincipalFrm.okBtnClick(Sender: TObject);
 var
   quantidade: double;
   subTotal: double;
+  item: TListBoxItem;
 begin
   if (quantidadeEdt.Text = '') then
   begin
@@ -133,23 +135,53 @@ begin
   end
   else
   begin
+    if (Pos(',', quantidadeEdt.Text) > 0) then
+    begin
+      if produtoSelecionado.CodUnidadeMedida = 'UN' then
+      begin
+        quantidadeEdt.Text := Copy(
+          quantidadeEdt.Text, 0,
+          Pos(',', quantidadeEdt.Text) - 1
+        );
+      end
+      else
+      begin
+        quantidadeEdt.Text := Copy(
+          quantidadeEdt.Text, 0,
+          Pos(',', quantidadeEdt.Text) + 2
+        );
+      end;
+    end;
+
+    quantidadeEdt.Text := FormatFloat('0.00', StrToFloat(quantidadeEdt.Text));
+
     quantidade := StrToFloat(quantidadeEdt.Text);
-    subTotal := quantidade * produtoSelecionado.Preco;
-    total := total + subTotal;
 
-    itensList.Items.Add(
-      completarComEspacos(IntToStr(produtoSelecionado.Codigo) + '-' + produtoSelecionado.Nome, 20)
-      + completarComEspacos(FormatFloat('0.00', quantidade), 8)
-      + completarComEspacos(FormatFloat('0.00', subTotal), 10)
-    );
+    if (quantidade > 0) then
+    begin
+      subTotal := quantidade * produtoSelecionado.Preco;
 
-    itemLbl.Text := 'Item: ';
-    precoLbl.Text := 'Preço: ';
-    quantidadeEdt.Text := '';
-    quantidadeEdt.Enabled := false;
-    okBtn.Enabled := false;
+      item := TListBoxItem.Create(itensList);
+      item.Text := IntToStr(produtoSelecionado.Codigo) + '-' + produtoSelecionado.Nome
+        + ' - ' + FormatFloat('0.00', quantidade) + produtoSelecionado.CodUnidadeMedida
+        + ' - R$ ' + FormatFloat('0.00', subTotal);
 
-    atualizarTotal();
+      itensList.Items.Add(
+        IntToStr(produtoSelecionado.Codigo) + '-' + produtoSelecionado.Nome
+        + ' - ' + FormatFloat('0.00', quantidade) + ' ' + produtoSelecionado.CodUnidadeMedida
+        + ' - R$ ' + FormatFloat('0.00', subTotal)
+      );
+
+      itemLbl.Text := 'Item: ';
+      precoLbl.Text := 'Preço: ';
+      quantidadeEdt.Text := '0,00';
+      quantidadeEdt.Enabled := false;
+      okBtn.Enabled := false;
+
+      atualizarTotal();
+    end
+    else
+      quantidadeEdt.SetFocus;
   end;
 end;
 
@@ -160,48 +192,172 @@ begin
   if (linhaSelecionada <> '') then
   begin
     result.Codigo := StrToInt(Copy(
-      produtosList.Selected.Text, 2, Pos('-', produtosList.Selected.Text) - 2
+      linhaSelecionada, 2, Pos('-', linhaSelecionada) - 2
     ));
 
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('-', linhaSelecionada) + 1,
+      Length(linhaSelecionada)
+    );
+
     result.Nome := Copy(
-      produtosList.Selected.Text,
-      Pos('-', produtosList.Selected.Text) + 1,
-      Pos('$', produtosList.Selected.Text) - 7
+      linhaSelecionada, 0,
+      Pos('$', linhaSelecionada) - 3
+    );
+
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('$', linhaSelecionada) + 2,
+      Length(linhaSelecionada)
     );
 
     result.Preco := StrToFloat(Copy(
-      produtosList.Selected.Text,
-      Pos('$', produtosList.Selected.Text) + 2,
-      Length(produtosList.Selected.Text) - (Pos('$', produtosList.Selected.Text) + 4)
+      linhaSelecionada, 0,
+      Pos('/', linhaSelecionada) - 1
     ));
 
-    result.CodUnidadeMedida := UpperCase(Copy(
-      produtosList.Selected.Text,
-      Pos('/', produtosList.Selected.Text) + 1, 2
-    ));
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('/', linhaSelecionada) + 1,
+      Length(linhaSelecionada)
+    );
+
+    result.CodUnidadeMedida := UpperCase(Copy(linhaSelecionada, 0, 2));
   end;
 end;
 
-function TprincipalFrm.completarComEspacos(str: string; qtdMax: integer): string;
+procedure TprincipalFrm.itensListDblClick(Sender: TObject);
+var
+  itemConsumido: TItemConsumido;
 begin
-  if (Length(str) > qtdMax) then
+  if (itensList.Selected.Text <> '') and
+     (Pos('Item', itensList.Selected.Text) = 0) then
   begin
-    result := Copy(str, 0, qtdMax);
-  end
-  else
-  begin
-    while (Length(str) < qtdMax) do
-    begin
-      str := str + ' ';
-    end;
+    itemConsumido := getItemConsumido(itensList.Selected.Text);
 
-    result := str;
+    if (itemConsumido.Total > 0) then
+    begin
+      if MessageDlg('Deseja cancelar o item selecionado?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        itensList.Items.Delete(itensList.ItemIndex);
+        atualizarTotal();
+      end;
+    end;
+  end;
+end;
+
+function TprincipalFrm.getItemConsumido(linhaSelecionada: string): TItemConsumido;
+begin
+  result := TItemConsumido.Create;
+
+  if (linhaSelecionada <> '') then
+  begin
+    result.Codigo := StrToInt(Copy(
+      linhaSelecionada, 0, Pos('-', linhaSelecionada) - 1
+    ));
+
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('-', linhaSelecionada) + 1,
+      Length(linhaSelecionada)
+    );
+
+    result.Nome := Copy(
+      linhaSelecionada, 0,
+      Pos('-', linhaSelecionada) - 2
+    );
+
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('-', linhaSelecionada) + 2,
+      Length(linhaSelecionada)
+    );
+
+    result.Quantidade := StrToFloat(Copy(
+      linhaSelecionada, 0,
+      Pos(' ', linhaSelecionada) - 1
+    ));
+
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos(' ', linhaSelecionada) + 1,
+      Length(linhaSelecionada)
+    );
+
+    result.CodUnidadeMedida := Copy(
+      linhaSelecionada, 0, 2
+    );
+
+    linhaSelecionada := Copy(
+      linhaSelecionada,
+      Pos('$', linhaSelecionada) + 2,
+      Length(linhaSelecionada)
+    );
+
+    result.Total := StrToFloat(Copy(
+      linhaSelecionada, 0, Length(linhaSelecionada)
+    ));
   end;
 end;
 
 procedure TprincipalFrm.atualizarTotal();
+var
+  total: double;
+  index: integer;
+  itemConsumido: TItemConsumido;
 begin
-  totalLbl.Text := FormatFloat('0.00', total);
+  total := 0;
+
+  if (itensList.Items.Count > 1) then
+  begin
+    for index := 0 to itensList.Items.Count - 1 do
+    begin
+      if (Pos('Item', itensList.Items[index]) = 0) then
+      begin
+        itemConsumido := getItemConsumido(itensList.Items[index]);
+        total := total + itemConsumido.Total;
+      end;
+    end;
+  end;
+
+  totalLbl.Text := 'R$ ' + FormatFloat('0.00', total);
+end;
+
+procedure TprincipalFrm.limparTela();
+begin
+  itensList.Items.Clear;
+  produtosList.Items.Clear;
+  codigoContaLbl.Text := '';
+  dataLbl.Text := '';
+  itemLbl.Text := 'Item: ';
+  precoLbl.Text := 'Preço: ';
+  quantidadeEdt.Text := '0,00';
+  atualizarTotal();
+end;
+
+procedure TprincipalFrm.cancelarBtnClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja cancelar a conta?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    limparTela();
+    itensList.Enabled := false;
+    produtosList.Enabled := false;
+    cancelarBtn.Enabled := false;
+    salvarBtn.Enabled := false;
+    nomeEdt.Enabled := false;
+    quantidadeEdt.Enabled := false;
+    okBtn.Enabled := false;
+    novaContaBtn.Enabled := true;
+  end;
+end;
+
+procedure TprincipalFrm.contasBtnClick(Sender: TObject);
+begin
+  if (contasFrm = nil) then
+    Application.CreateForm(TcontasFrm, contasFrm);
+
+    contasFrm.ShowModal;
 end;
 
 procedure TprincipalFrm.produtosListDblClick(Sender: TObject);
@@ -220,6 +376,28 @@ begin
     quantidadeEdt.Enabled := true;
     quantidadeEdt.SetFocus;
   end;
+end;
+
+procedure TprincipalFrm.produtosListKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  if (Key = vkReturn) then
+  begin
+    produtosListDblClick(produtosList);
+  end;
+end;
+
+procedure TprincipalFrm.quantidadeEdtKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  if Key = vkReturn then
+  begin
+    okBtnClick(okBtn);
+    produtosList.SetFocus;
+  end;
+
+  if not (KeyChar in ['0'..'9',',',#8]) then
+    KeyChar := #0;
 end;
 
 procedure TprincipalFrm.FormShow(Sender: TObject);
@@ -249,8 +427,7 @@ begin
   titulo := 'Caixa - ' + DateToStr(Now);
   principalFrm.Caption := titulo;
   tituloTxt.Text := titulo;
-  codigoContaLbl.Text := '';
-  dataLbl.Text := '';
+  limparTela();
 end;
 
 procedure TprincipalFrm.novaContaBtnClick(Sender: TObject);
@@ -258,17 +435,13 @@ begin
   if atualizarListaProdutos() then
   begin
     produtosList.Enabled := true;
-    codigoContaLbl.Text := novoCodigoConta();
+    codigoContaLbl.Text := dm.gerarCodConta();
     dataLbl.Text := DateToStr(Now);
     nomeEdt.Enabled := true;
+    nomeEdt.Text := '';
     nomeEdt.SetFocus;
     novaContaBtn.Enabled := false;
-    itensList.Items.Add(
-      completarComEspacos('Item', 22)
-      + completarComEspacos('Qtd', 10)
-      + completarComEspacos('Valor R$', 10)
-    );
-    total := 0;
+    itensList.Items.Add('Item - Qtd - Valor');
     atualizarTotal();
     cancelarBtn.Enabled := true;
     salvarBtn.Enabled := true;
@@ -279,6 +452,43 @@ end;
 procedure TprincipalFrm.sairBtnClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TprincipalFrm.salvarBtnClick(Sender: TObject);
+var
+  conta: TConta;
+  index: integer;
+  itemConsumido: TItemConsumido;
+begin
+  if (itensList.Items.Count < 2) then
+  begin
+    MessageDlg('É preciso inserir pelo menos um item na Conta.', mtInformation, [mbOk], 0);
+  end
+  else
+  begin
+    conta := TConta.Create;
+    conta.Codigo := codigoContaLbl.Text;
+    conta.Nome := nomeEdt.Text;
+    conta.Data := Now;
+
+    for index := 0 to itensList.Items.Count - 1 do
+    begin
+      if (Pos('Item', itensList.Items[index]) = 0) then
+      begin
+        itemConsumido := getItemConsumido(itensList.Items[index]);
+        conta.adicionarItem(itemConsumido);
+      end;
+    end;
+
+    if (dm.gravarConta(conta)) then
+    begin
+      MessageDlg('Conta finalizada com sucesso!', mtInformation, [mbOk], 0);
+      limparTela();
+      novaContaBtnClick(novaContaBtn);
+    end
+    else
+      MessageDlg('Não foi possível finalizar a conta. Tente novamente', mtWarning, [mbOk], 0);
+  end;
 end;
 
 end.

@@ -1,7 +1,7 @@
 object dm: Tdm
   OldCreateOrder = False
-  Height = 203
-  Width = 238
+  Height = 270
+  Width = 382
   object conn: TFDConnection
     Params.Strings = (
       'DriverID=FB'
@@ -15,6 +15,7 @@ object dm: Tdm
     Top = 16
   end
   object produtosTr: TFDTransaction
+    Options.AutoStop = False
     Connection = conn
     Left = 24
     Top = 80
@@ -57,6 +58,7 @@ object dm: Tdm
     end
   end
   object unidadesMedidaTr: TFDTransaction
+    Options.AutoStop = False
     Connection = conn
     Left = 96
     Top = 80
@@ -83,6 +85,7 @@ object dm: Tdm
     end
   end
   object tiposProdutoTr: TFDTransaction
+    Options.AutoStop = False
     Connection = conn
     Left = 168
     Top = 80
@@ -101,5 +104,94 @@ object dm: Tdm
       Required = True
       Size = 255
     end
+  end
+  object contasTr: TFDTransaction
+    Options.AutoStop = False
+    Connection = conn
+    Left = 240
+    Top = 80
+  end
+  object contasQry: TFDQuery
+    CachedUpdates = True
+    Connection = conn
+    Transaction = contasTr
+    SQL.Strings = (
+      'SELECT * FROM contas')
+    Left = 240
+    Top = 136
+    object contasQryCODIGO: TStringField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 255
+    end
+    object contasQryNOME: TStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Size = 255
+    end
+    object contasQryDATA: TSQLTimeStampField
+      FieldName = 'DATA'
+      Origin = '"DATA"'
+      Required = True
+    end
+  end
+  object itensContaQry: TFDQuery
+    CachedUpdates = True
+    Connection = conn
+    Transaction = contasTr
+    SQL.Strings = (
+      'SELECT * FROM itens_conta')
+    Left = 304
+    Top = 136
+    object itensContaQryCODCONTA: TStringField
+      FieldName = 'CODCONTA'
+      Origin = 'CODCONTA'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 255
+    end
+    object itensContaQryCODPRODUTO: TIntegerField
+      FieldName = 'CODPRODUTO'
+      Origin = 'CODPRODUTO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object itensContaQryQUANTIDADE: TFloatField
+      FieldName = 'QUANTIDADE'
+      Origin = 'QUANTIDADE'
+      Required = True
+    end
+    object itensContaQrySUBTOTAL: TFloatField
+      FieldName = 'SUBTOTAL'
+      Origin = 'SUBTOTAL'
+      Required = True
+    end
+  end
+  object produtosSource: TDataSource
+    DataSet = produtosQry
+    Left = 24
+    Top = 192
+  end
+  object unidadesMedidaSource: TDataSource
+    DataSet = unidadesMedidaQry
+    Left = 96
+    Top = 192
+  end
+  object tiposProdutoSource: TDataSource
+    DataSet = tiposProdutoQry
+    Left = 168
+    Top = 192
+  end
+  object contasSource: TDataSource
+    DataSet = contasQry
+    Left = 240
+    Top = 192
+  end
+  object itensContaSource: TDataSource
+    DataSet = itensContaQry
+    Left = 304
+    Top = 192
   end
 end

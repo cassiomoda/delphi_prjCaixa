@@ -1,0 +1,99 @@
+object contasFrm: TcontasFrm
+  Left = 0
+  Top = 0
+  Caption = 'Contas'
+  ClientHeight = 480
+  ClientWidth = 640
+  Fill.Color = xFFDEDDDD
+  Fill.Kind = Solid
+  Position = OwnerFormCenter
+  StyleBook = estilosFrm.principalSTB
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object tituloPnl: TPanel
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 70.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'tituloPnlStyle'
+    TabOrder = 0
+    object tituloTxt: TText
+      Align = Contents
+      Locked = True
+      HitTest = False
+      Size.Width = 640.000000000000000000
+      Size.Height = 70.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Contas'
+      TextSettings.Font.Size = 25.000000000000000000
+    end
+  end
+  object Layout1: TLayout
+    Align = Bottom
+    Position.Y = 425.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object sairBtn: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 514.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyleVermelho'
+      TabOrder = 5
+      Text = 'Sair'
+      OnClick = sairBtnClick
+    end
+    object atualizarBtn: TButton
+      Position.X = 16.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 0
+      Text = 'Atualizar'
+    end
+    object excluirBtn: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 146.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyleVermelho'
+      TabOrder = 4
+      Text = 'Excluir'
+      OnClick = sairBtnClick
+    end
+  end
+  object contasFinalizadasTxt: TText
+    Align = Top
+    Position.Y = 70.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Contas finalizadas'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00060000000000000004000000}
+    TextSettings.HorzAlign = Leading
+    TextSettings.VertAlign = Trailing
+  end
+  object itensContaTxt: TText
+    Align = Top
+    Position.Y = 105.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Itens da conta'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00060000000000000004000000}
+    TextSettings.HorzAlign = Leading
+    TextSettings.VertAlign = Trailing
+  end
+end

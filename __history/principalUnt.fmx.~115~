@@ -1,0 +1,361 @@
+object principalFrm: TprincipalFrm
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'Caixa'
+  ClientHeight = 480
+  ClientWidth = 800
+  Fill.Color = xFFDEDDDD
+  Fill.Kind = Solid
+  Position = DesktopCenter
+  StyleBook = estilosFrm.principalSTB
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object tituloPnl: TPanel
+    Align = Top
+    Size.Width = 800.000000000000000000
+    Size.Height = 70.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'tituloPnlStyle'
+    TabOrder = 1
+    object tituloTxt: TText
+      Align = Contents
+      Locked = True
+      HitTest = False
+      Size.Width = 800.000000000000000000
+      Size.Height = 70.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Caixa'
+      TextSettings.Font.Size = 25.000000000000000000
+    end
+  end
+  object rodapeLyt: TLayout
+    Align = Bottom
+    Position.Y = 425.000000000000000000
+    Size.Width = 800.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object produtosBtn: TButton
+      Position.X = 128.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 1
+      Text = 'Produtos'
+    end
+    object unidadesMedidaBtn: TButton
+      Position.X = 248.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 2
+      Text = 'Unidades Medida'
+    end
+    object tiposProdutoBtn: TButton
+      Position.X = 368.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 3
+      Text = 'Tipos Produto'
+    end
+    object sairBtn: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 639.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyleVermelho'
+      TabOrder = 4
+      Text = 'Sair'
+      OnClick = sairBtnClick
+    end
+    object contasBtn: TButton
+      Position.X = 8.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 0
+      Text = 'Contas'
+      OnClick = contasBtnClick
+    end
+  end
+  object produtosLyt: TLayout
+    Align = Left
+    Position.Y = 70.000000000000000000
+    Size.Width = 190.000000000000000000
+    Size.Height = 355.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object produtosTxt: TText
+      Align = Top
+      Size.Width = 190.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Produtos'
+    end
+    object produtosList: TListBox
+      Align = Client
+      Enabled = False
+      Size.Width = 185.000000000000000000
+      Size.Height = 325.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      OnDblClick = produtosListDblClick
+      DisableFocusEffect = True
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      OnKeyDown = produtosListKeyDown
+      Viewport.Width = 181.000000000000000000
+      Viewport.Height = 321.000000000000000000
+    end
+    object espacoEsquerdoLyt: TLayout
+      Align = Left
+      Position.Y = 30.000000000000000000
+      Size.Width = 5.000000000000000000
+      Size.Height = 325.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+    end
+  end
+  object camposLyt: TLayout
+    Align = Client
+    Size.Width = 377.000000000000000000
+    Size.Height = 355.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object novaContaBtn: TButton
+      Position.X = 8.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyle'
+      TabOrder = 1
+      Text = 'Nova Conta'
+      OnClick = novaContaBtnClick
+    end
+    object okBtn: TButton
+      Enabled = False
+      Position.X = 9.000000000000000000
+      Position.Y = 251.000000000000000000
+      Size.Width = 110.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'btnStyleVerde'
+      TabOrder = 0
+      Text = 'Ok!'
+      OnClick = okBtnClick
+    end
+    object nomeEdt: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 5
+      MaxLength = 255
+      Position.X = 16.000000000000000000
+      Position.Y = 72.000000000000000000
+      Enabled = False
+      Size.Width = 255.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      object nomeLbl: TLabel
+        AutoSize = True
+        Position.Y = -19.000000000000000000
+        Size.Width = 57.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Nome'
+        TabOrder = 0
+      end
+      object dataLbl: TLabel
+        Position.X = 263.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'dataLbl'
+        TabOrder = 1
+      end
+    end
+    object codigoContaLbl: TLabel
+      StyledSettings = [Family, FontColor]
+      Position.X = 127.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 314.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 15.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      Text = 'codigoContaLbl'
+      TabOrder = 6
+    end
+    object itemLbl: TLabel
+      StyledSettings = [Family, FontColor]
+      Position.X = 16.000000000000000000
+      Position.Y = 128.000000000000000000
+      Size.Width = 385.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      Text = 'Item: '
+      TabOrder = 8
+    end
+    object precoLbl: TLabel
+      StyledSettings = [Family, FontColor]
+      Position.X = 16.000000000000000000
+      Position.Y = 152.000000000000000000
+      Size.Width = 385.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      Text = 'Pre'#231'o: '
+      TabOrder = 7
+    end
+    object quantidadeEdt: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 9
+      MaxLength = 5
+      TextSettings.HorzAlign = Trailing
+      Position.X = 16.000000000000000000
+      Position.Y = 208.000000000000000000
+      Enabled = False
+      Size.Width = 100.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      OnKeyDown = quantidadeEdtKeyDown
+      object quantidadeLbl: TLabel
+        AutoSize = True
+        Position.Y = -19.000000000000000000
+        Size.Width = 89.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Quantidade'
+        TabOrder = 0
+      end
+    end
+    object totalTxt: TText
+      Position.X = 8.000000000000000000
+      Position.Y = 288.000000000000000000
+      Size.Width = 361.000000000000000000
+      Size.Height = 58.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Total'
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      TextSettings.HorzAlign = Trailing
+      TextSettings.VertAlign = Leading
+      object totalLbl: TLabel
+        Align = Contents
+        StyledSettings = [Family]
+        Locked = True
+        Size.Width = 361.000000000000000000
+        Size.Height = 58.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 26.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = xFFDC2626
+        TextSettings.HorzAlign = Trailing
+        TextSettings.VertAlign = Trailing
+        Text = 'R$ 0,00'
+        TabOrder = 0
+      end
+    end
+  end
+  object itensLyt: TLayout
+    Align = Right
+    Position.X = 575.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 225.000000000000000000
+    Size.Height = 355.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    object itensTxt: TText
+      Align = Top
+      Size.Width = 225.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Itens consumidos'
+    end
+    object itensList: TListBox
+      Align = Client
+      Enabled = False
+      Size.Width = 220.000000000000000000
+      Size.Height = 242.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'itensListStyle1'
+      TabOrder = 1
+      OnDblClick = itensListDblClick
+      DisableFocusEffect = True
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      Viewport.Width = 216.000000000000000000
+      Viewport.Height = 238.000000000000000000
+    end
+    object cancelarSalvarLyt: TLayout
+      Align = Bottom
+      Position.Y = 272.000000000000000000
+      Size.Width = 225.000000000000000000
+      Size.Height = 83.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object cancelarBtn: TButton
+        Enabled = False
+        Position.X = 63.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'btnStyleVermelho'
+        TabOrder = 1
+        Text = 'Cancelar'
+        OnClick = cancelarBtnClick
+      end
+      object salvarBtn: TButton
+        Enabled = False
+        Position.X = 63.000000000000000000
+        Position.Y = 43.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'btnStyleVerde'
+        TabOrder = 0
+        Text = 'Salvar'
+        OnClick = salvarBtnClick
+      end
+    end
+    object espacoDireitoLyt: TLayout
+      Align = Right
+      Position.X = 220.000000000000000000
+      Position.Y = 30.000000000000000000
+      Size.Width = 5.000000000000000000
+      Size.Height = 242.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+    end
+  end
+  object produtosSplitter: TSplitter
+    Align = Left
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 190.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 8.000000000000000000
+    Size.Height = 355.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

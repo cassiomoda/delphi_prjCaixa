@@ -266,6 +266,16 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="model\produto.pas"/>
+        <DCCReference Include="model\itemConsumido.pas"/>
+        <DCCReference Include="model\conta.pas"/>
+        <DCCReference Include="contasUnt.pas">
+            <Form>contasFrm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="estilosUnt.pas">
+            <Form>estilosFrm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

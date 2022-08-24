@@ -10,6 +10,16 @@
     <Transaction>2022/08/23 11:35:30.000.891,C:\dev\delphi\prjCaixa\dmUnt.dfm=C:\dev\delphi\prjCaixa\Unit1.dfm</Transaction>
     <Transaction>2022/08/23 19:14:16.000.018,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
     <Transaction>2022/08/23 19:14:57.000.293,C:\dev\delphi\prjCaixa\model\produto.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 07:51:42.000.539,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 07:52:12.000.189,C:\dev\delphi\prjCaixa\Unit1.pas=C:\dev\delphi\prjCaixa\model\itemConsumido.pas</Transaction>
+    <Transaction>2022/08/24 10:54:41.000.047,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 10:54:56.000.403,C:\dev\delphi\prjCaixa\model\conta.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 12:39:14.000.811,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 12:39:57.000.510,C:\dev\delphi\prjCaixa\Unit1.fmx=C:\dev\delphi\prjCaixa\contasUnt.fmx</Transaction>
+    <Transaction>2022/08/24 12:39:57.000.510,C:\dev\delphi\prjCaixa\Unit1.pas=C:\dev\delphi\prjCaixa\contasUnt.pas</Transaction>
+    <Transaction>2022/08/24 12:45:28.000.017,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/24 12:45:52.000.246,C:\dev\delphi\prjCaixa\Unit1.fmx=C:\dev\delphi\prjCaixa\estilosUnt.fmx</Transaction>
+    <Transaction>2022/08/24 12:45:52.000.246,C:\dev\delphi\prjCaixa\Unit1.pas=C:\dev\delphi\prjCaixa\estilosUnt.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5"/>
@@ -72,10 +82,16 @@
     <File Path="google-play-billing.dex.jar"/>
     <File Path="google-play-licensing.dex.jar"/>
     <File Path="model"/>
+    <File Path="model\conta.pas"/>
+    <File Path="model\itemConsumido.pas"/>
     <File Path="model\produto.pas"/>
     <File Path="dmUnt.pas"/>
     <File Path="dmUnt.dfm"/>
     <File Path="principalUnt.pas"/>
     <File Path="principalUnt.fmx"/>
+    <File Path="contasUnt.pas"/>
+    <File Path="contasUnt.fmx"/>
+    <File Path="estilosUnt.pas"/>
+    <File Path="estilosUnt.fmx"/>
   </ProjectSortOrder>
 </BorlandProject>

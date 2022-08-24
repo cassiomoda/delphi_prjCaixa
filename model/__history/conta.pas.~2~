@@ -1,0 +1,21 @@
+unit conta;
+
+interface
+
+uses
+  Classes, itemConsumido;
+
+type
+  TConta = class
+
+  private
+    FCodigo: string;
+    FNome: string;
+    FData: TDateTime;
+    FItems: TList;
+
+end;
+
+implementation
+
+end.

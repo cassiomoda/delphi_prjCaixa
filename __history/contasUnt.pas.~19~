@@ -1,0 +1,51 @@
+unit contasUnt;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, estilosUnt,
+  FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
+  System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox;
+
+type
+  TcontasFrm = class(TForm)
+    tituloPnl: TPanel;
+    tituloTxt: TText;
+    Layout1: TLayout;
+    sairBtn: TButton;
+    atualizarBtn: TButton;
+    excluirBtn: TButton;
+    contasFinalizadasTxt: TText;
+    itensContaTxt: TText;
+    contasGrid: TStringGrid;
+    codigoClm: TStringColumn;
+    nomeClm: TStringColumn;
+    procedure sairBtnClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  contasFrm: TcontasFrm;
+
+implementation
+
+{$R *.fmx}
+
+procedure TcontasFrm.FormShow(Sender: TObject);
+begin
+//  contasGrid.RowCount := 2;
+  contasGrid.Cells[0,0] := '123';
+  contasGrid.Cells[1,0] := 'Jeremias';
+end;
+
+procedure TcontasFrm.sairBtnClick(Sender: TObject);
+begin
+  Close;
+end;
+
+end.
