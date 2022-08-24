@@ -92,7 +92,7 @@ var
   index: integer;
   itemConsumido: TItemConsumido;
 begin
-  result := -1;
+  result := 0;
 
   if (FItems <> nil) then
   begin

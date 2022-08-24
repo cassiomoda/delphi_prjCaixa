@@ -51,7 +51,6 @@ type
     function gerarCodConta(): string;
     function gravarConta(conta: TConta): boolean;
     function getListaContas(): TList;
-    function excluirConta(codigo: string): boolean;
   end;
 
 var
@@ -233,7 +232,6 @@ begin
         produtosQry.Filtered := true;
 
         itemConsumido.Nome := produtosQryNOME.Value;
-        itemConsumido.CodUnidadeMedida := produtosQryCODUNIDADEMEDIDA.Value;
 
         conta.adicionarItem(itemConsumido);
         itensContaQry.Next;
@@ -248,50 +246,6 @@ begin
     produtosQry.Filter := '';
     produtosQry.Filtered := false;
     produtosQry.Close;
-  end;
-end;
-
-function Tdm.excluirConta(codigo: string): boolean;
-begin
-  result := false;
-
-  if (codigo <> '') then
-  begin
-    try
-      try
-        contasTr.StartTransaction;
-
-        itensContaQry.Close;
-        itensContaQry.SQL.Clear;
-        itensContaQry.SQL.Text := ' SELECT * FROM itens_conta '
-          + ' WHERE codConta = ' + QuotedStr(codigo);
-        itensContaQry.Open;
-
-        while not itensContaQry.Eof do
-        begin
-          itensContaQry.Delete;
-          itensContaQry.First;
-        end;
-
-        itensContaQry.ApplyUpdates;
-
-        contasQry.Close;
-        contasQry.SQL.Clear;
-        contasQry.SQL.Text := ' SELECT * FROM contas '
-          + ' WHERE codigo = ' + QuotedStr(codigo);
-        contasQry.Open;
-        contasQry.Delete;
-        contasQry.ApplyUpdates;
-
-        contasTr.Commit;
-        result := true;
-      except
-        contasTr.Rollback;
-      end;
-    finally
-      itensContaQry.Close;
-      contasQry.Close;
-    end;
   end;
 end;
 

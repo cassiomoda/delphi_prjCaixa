@@ -61,25 +61,11 @@ begin
 end;
 
 procedure TConta.adicionarItem(item: TItemConsumido);
-var
-  index: integer;
-  itemLista: TItemConsumido;
 begin
   if (FItems = nil) then
     FItems := TList.Create;
 
-  index := -1;
-  index := pesquisarItem(item);
-
-  if (index < 0) then
-    FItems.Add(item)
-  else
-  begin
-    itemLista := FItems[index];
-    itemLista.Quantidade := itemLista.Quantidade + item.Quantidade;
-    itemLista.Total := itemLista.Total + item.Total;
-    FItems[index] := itemLista;
-  end;
+  FItems.Add(item);
 end;
 
 procedure TConta.removerItem(item: TItemConsumido);
@@ -88,24 +74,12 @@ begin
 end;
 
 function TConta.pesquisarItem(item: TItemConsumido): integer;
-var
-  index: integer;
-  itemConsumido: TItemConsumido;
 begin
-  result := -1;
+  result := 0;
 
   if (FItems <> nil) then
   begin
-    for index := 0 to FItems.Count - 1 do
-    begin
-      itemConsumido := FItems[index];
-
-      if (item.Codigo = itemConsumido.Codigo) then
-      begin
-        result := index;
-        break;
-      end;
-    end;
+    result := FItems.IndexOf(item);
   end;
 end;
 

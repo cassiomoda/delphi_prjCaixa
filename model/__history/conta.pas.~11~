@@ -22,8 +22,6 @@ type
   public
     procedure adicionarItem(item: TItemConsumido);
     procedure removerItem(item: TItemConsumido);
-    function pesquisarItem(item: TItemConsumido): integer;
-    function getTotal(): double;
 
   published
     property Codigo: string read FCodigo write setCodigo;
@@ -61,69 +59,16 @@ begin
 end;
 
 procedure TConta.adicionarItem(item: TItemConsumido);
-var
-  index: integer;
-  itemLista: TItemConsumido;
 begin
   if (FItems = nil) then
     FItems := TList.Create;
 
-  index := -1;
-  index := pesquisarItem(item);
-
-  if (index < 0) then
-    FItems.Add(item)
-  else
-  begin
-    itemLista := FItems[index];
-    itemLista.Quantidade := itemLista.Quantidade + item.Quantidade;
-    itemLista.Total := itemLista.Total + item.Total;
-    FItems[index] := itemLista;
-  end;
+  FItems.Add(item);
 end;
 
 procedure TConta.removerItem(item: TItemConsumido);
 begin
   FItems.Remove(item);
-end;
-
-function TConta.pesquisarItem(item: TItemConsumido): integer;
-var
-  index: integer;
-  itemConsumido: TItemConsumido;
-begin
-  result := -1;
-
-  if (FItems <> nil) then
-  begin
-    for index := 0 to FItems.Count - 1 do
-    begin
-      itemConsumido := FItems[index];
-
-      if (item.Codigo = itemConsumido.Codigo) then
-      begin
-        result := index;
-        break;
-      end;
-    end;
-  end;
-end;
-
-function TConta.getTotal(): double;
-var
-  itemConsumido: TItemConsumido;
-  index: integer;
-begin
-  result := 0;
-
-  if (FItems.Count > 0) then
-  begin
-    for index := 0 to FItems.Count - 1 do
-    begin
-      itemConsumido := FItems[index];
-      result := result + itemConsumido.Total;
-    end;
-  end;
 end;
 
 initialization

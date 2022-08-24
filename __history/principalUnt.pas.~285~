@@ -13,6 +13,9 @@ type
     tituloPnl: TPanel;
     tituloTxt: TText;
     rodapeLyt: TLayout;
+    produtosBtn: TButton;
+    unidadesMedidaBtn: TButton;
+    tiposProdutoBtn: TButton;
     sairBtn: TButton;
     produtosLyt: TLayout;
     produtosTxt: TText;
@@ -40,8 +43,6 @@ type
     produtosSplitter: TSplitter;
     totalTxt: TText;
     totalLbl: TLabel;
-    instrucao1Txt: TText;
-    instrucao2Txt: TText;
     procedure FormShow(Sender: TObject);
     procedure sairBtnClick(Sender: TObject);
     procedure novaContaBtnClick(Sender: TObject);

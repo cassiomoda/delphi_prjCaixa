@@ -68,10 +68,10 @@ begin
   if (FItems = nil) then
     FItems := TList.Create;
 
-  index := -1;
+  index := 0;
   index := pesquisarItem(item);
 
-  if (index < 0) then
+  if (index = 0) then
     FItems.Add(item)
   else
   begin
@@ -92,7 +92,7 @@ var
   index: integer;
   itemConsumido: TItemConsumido;
 begin
-  result := -1;
+  result := 0;
 
   if (FItems <> nil) then
   begin

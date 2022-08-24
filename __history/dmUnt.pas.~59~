@@ -275,14 +275,6 @@ begin
 
         itensContaQry.ApplyUpdates;
 
-        contasQry.Close;
-        contasQry.SQL.Clear;
-        contasQry.SQL.Text := ' SELECT * FROM contas '
-          + ' WHERE codigo = ' + QuotedStr(codigo);
-        contasQry.Open;
-        contasQry.Delete;
-        contasQry.ApplyUpdates;
-
         contasTr.Commit;
         result := true;
       except
@@ -290,7 +282,6 @@ begin
       end;
     finally
       itensContaQry.Close;
-      contasQry.Close;
     end;
   end;
 end;

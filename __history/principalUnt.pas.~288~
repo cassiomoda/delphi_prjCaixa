@@ -41,7 +41,7 @@ type
     totalTxt: TText;
     totalLbl: TLabel;
     instrucao1Txt: TText;
-    instrucao2Txt: TText;
+    Text1: TText;
     procedure FormShow(Sender: TObject);
     procedure sairBtnClick(Sender: TObject);
     procedure novaContaBtnClick(Sender: TObject);

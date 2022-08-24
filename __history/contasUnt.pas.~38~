@@ -122,13 +122,7 @@ begin
   begin
     if MessageDlg('Deseja excluir a conta selecionada?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      if (dm.excluirConta(codConta)) then
-      begin
-        MessageDlg('Conta excluida com sucesso!', mtInformation, [mbOk], 0);
-        listarContas();
-      end
-      else
-        MessageDlg('Não foi possível excluir a conta. Tente novamente.', mtWarning, [mbOk], 0);
+
     end;
   end;
 end;

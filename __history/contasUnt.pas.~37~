@@ -6,8 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, estilosUnt,
   FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts, dmUnt,
-  System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox, conta, itemConsumido,
-  Vcl.Dialogs;
+  System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox, conta, itemConsumido;
 
 type
   TcontasFrm = class(TForm)
@@ -33,7 +32,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure contasGridSelChanged(Sender: TObject);
     procedure atualizarBtnClick(Sender: TObject);
-    procedure excluirBtnClick(Sender: TObject);
   private
     { Private declarations }
     contasList: TList;
@@ -108,27 +106,6 @@ begin
         itensGrid.Cells[2, linha] := FormatFloat('0.00', itemConsumido.Total);
         itensGrid.Cells[3, linha] := itemConsumido.CodUnidadeMedida;
       end;
-    end;
-  end;
-end;
-
-procedure TcontasFrm.excluirBtnClick(Sender: TObject);
-var
-  codConta: string;
-begin
-  codConta := contasGrid.Cells[0, contasGrid.Row];
-
-  if (codConta <> '') then
-  begin
-    if MessageDlg('Deseja excluir a conta selecionada?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    begin
-      if (dm.excluirConta(codConta)) then
-      begin
-        MessageDlg('Conta excluida com sucesso!', mtInformation, [mbOk], 0);
-        listarContas();
-      end
-      else
-        MessageDlg('Não foi possível excluir a conta. Tente novamente.', mtWarning, [mbOk], 0);
     end;
   end;
 end;
