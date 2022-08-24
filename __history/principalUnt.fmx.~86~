@@ -1,6 +1,7 @@
 object principalFrm: TprincipalFrm
   Left = 0
   Top = 0
+  BorderStyle = Single
   Caption = 'Caixa'
   ClientHeight = 480
   ClientWidth = 800
@@ -494,7 +495,7 @@ object principalFrm: TprincipalFrm
     end
     object sairBtn: TButton
       Anchors = [akTop, akRight]
-      Position.X = 656.000000000000000000
+      Position.X = 646.000000000000000000
       Position.Y = 13.000000000000000000
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
@@ -573,13 +574,14 @@ object principalFrm: TprincipalFrm
     object okBtn: TButton
       Enabled = False
       Position.X = 9.000000000000000000
-      Position.Y = 235.000000000000000000
+      Position.Y = 251.000000000000000000
       Size.Width = 110.000000000000000000
       Size.Height = 30.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'btnStyleVerde'
       TabOrder = 0
       Text = 'Ok!'
+      OnClick = okBtnClick
     end
     object nomeEdt: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -622,11 +624,10 @@ object principalFrm: TprincipalFrm
       TabOrder = 6
     end
     object itemLbl: TLabel
-      AutoSize = True
       StyledSettings = [Family, FontColor]
       Position.X = 16.000000000000000000
       Position.Y = 128.000000000000000000
-      Size.Width = 41.000000000000000000
+      Size.Width = 385.000000000000000000
       Size.Height = 19.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 14.000000000000000000
@@ -635,11 +636,10 @@ object principalFrm: TprincipalFrm
       TabOrder = 8
     end
     object precoLbl: TLabel
-      AutoSize = True
       StyledSettings = [Family, FontColor]
       Position.X = 16.000000000000000000
       Position.Y = 152.000000000000000000
-      Size.Width = 41.000000000000000000
+      Size.Width = 385.000000000000000000
       Size.Height = 19.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 14.000000000000000000
@@ -651,7 +651,7 @@ object principalFrm: TprincipalFrm
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 9
       Position.X = 16.000000000000000000
-      Position.Y = 192.000000000000000000
+      Position.Y = 208.000000000000000000
       Enabled = False
       Size.Width = 100.000000000000000000
       Size.Height = 30.000000000000000000
@@ -663,6 +663,32 @@ object principalFrm: TprincipalFrm
         Size.Height = 16.000000000000000000
         Size.PlatformDefault = False
         Text = 'Quantidade'
+        TabOrder = 0
+      end
+    end
+    object totalTxt: TText
+      Position.X = 8.000000000000000000
+      Position.Y = 288.000000000000000000
+      Size.Width = 394.000000000000000000
+      Size.Height = 58.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Total'
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      TextSettings.HorzAlign = Trailing
+      TextSettings.VertAlign = Leading
+      object totalLbl: TLabel
+        Align = Contents
+        StyledSettings = [Family]
+        Size.Width = 394.000000000000000000
+        Size.Height = 58.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 26.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = xFFDC2626
+        TextSettings.HorzAlign = Trailing
+        TextSettings.VertAlign = Trailing
+        Text = 'R$ 0,00'
         TabOrder = 0
       end
     end

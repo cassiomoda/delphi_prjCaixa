@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2022/08/23 11:33:28.831,=C:\dev\delphi\Unit1.pas</Transaction>
-    <Transaction>2022/08/23 11:34:06.933,C:\dev\delphi\prjCaixa\principalUnt.fmx=C:\dev\delphi\Unit1.fmx</Transaction>
-    <Transaction>2022/08/23 11:34:06.933,C:\dev\delphi\prjCaixa\principalUnt.pas=C:\dev\delphi\Unit1.pas</Transaction>
-    <Transaction>2022/08/23 11:34:17.175,C:\dev\delphi\prjCaixa\prjCaixa.dproj=C:\dev\delphi\Project1.dproj</Transaction>
-    <Transaction>2022/08/23 11:35:06.474,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
-    <Transaction>2022/08/23 11:35:30.891,C:\dev\delphi\prjCaixa\dmUnt.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
-    <Transaction>2022/08/23 11:35:30.891,C:\dev\delphi\prjCaixa\dmUnt.dfm=C:\dev\delphi\prjCaixa\Unit1.dfm</Transaction>
-    <Transaction>2022/08/23 19:14:16.018,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
-    <Transaction>2022/08/23 19:14:57.293,C:\dev\delphi\prjCaixa\model\produto.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+	<Transactions>
+    <Transaction>2022/08/23 11:33:28.000.831,=C:\dev\delphi\Unit1.pas</Transaction>
+    <Transaction>2022/08/23 11:34:06.000.933,C:\dev\delphi\prjCaixa\principalUnt.fmx=C:\dev\delphi\Unit1.fmx</Transaction>
+    <Transaction>2022/08/23 11:34:06.000.933,C:\dev\delphi\prjCaixa\principalUnt.pas=C:\dev\delphi\Unit1.pas</Transaction>
+    <Transaction>2022/08/23 11:34:17.000.175,C:\dev\delphi\prjCaixa\prjCaixa.dproj=C:\dev\delphi\Project1.dproj</Transaction>
+    <Transaction>2022/08/23 11:35:06.000.474,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/23 11:35:30.000.891,C:\dev\delphi\prjCaixa\dmUnt.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/23 11:35:30.000.891,C:\dev\delphi\prjCaixa\dmUnt.dfm=C:\dev\delphi\prjCaixa\Unit1.dfm</Transaction>
+    <Transaction>2022/08/23 19:14:16.000.018,=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
+    <Transaction>2022/08/23 19:14:57.000.293,C:\dev\delphi\prjCaixa\model\produto.pas=C:\dev\delphi\prjCaixa\Unit1.pas</Transaction>
   </Transactions>
-  <ActiveMobileDevice>   <NoProfile iOSSimulator="iPhone5"/>
-  </ActiveMobileDevice>
-  <ProjectSortOrder AutoSort="0" SortType="0">
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="android-support-v4.dex.jar"/>
     <File Path="cloud-messaging.dex.jar"/>
     <File Path="com-google-android-gms.play-services-ads-base.17.2.0.dex.jar"/>

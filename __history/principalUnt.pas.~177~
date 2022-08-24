@@ -95,7 +95,7 @@ begin
       begin
         produtosList.Items.Add(
           '  ' + dm.produtosQryCODIGO.AsString
-          + ' - ' + dm.produtosQryNOME.AsString
+          + '-' + dm.produtosQryNOME.AsString
           + ' R$ ' + FormatFloat('0.00', dm.produtosQryPRECO.Value)
           + '/' + UpperCase(dm.produtosQryCODUNIDADEMEDIDA.AsString)
         );
@@ -135,12 +135,20 @@ begin
   begin
     quantidade := StrToFloat(quantidadeEdt.Text);
     subTotal := quantidade * produtoSelecionado.Preco;
+    total := total + subTotal;
 
     itensList.Items.Add(
-      completarComEspacos(IntToStr(produtoSelecionado.Codigo) + ' - ' + produtoSelecionado.Nome, 19)
+      completarComEspacos(IntToStr(produtoSelecionado.Codigo) + '-' + produtoSelecionado.Nome, 20)
       + completarComEspacos(FormatFloat('0.00', quantidade), 8)
       + completarComEspacos(FormatFloat('0.00', subTotal), 10)
     );
+
+    itemLbl.Text := 'Item: ';
+    precoLbl.Text := 'Preço: ';
+    quantidadeEdt.Text := '';
+    quantidadeEdt.Enabled := false;
+    okBtn.Enabled := false;
+
     atualizarTotal();
   end;
 end;
@@ -152,13 +160,13 @@ begin
   if (linhaSelecionada <> '') then
   begin
     result.Codigo := StrToInt(Copy(
-      produtosList.Selected.Text, 2, Pos('-', produtosList.Selected.Text) - 3
+      produtosList.Selected.Text, 2, Pos('-', produtosList.Selected.Text) - 2
     ));
 
     result.Nome := Copy(
       produtosList.Selected.Text,
-      Pos('-', produtosList.Selected.Text) + 2,
-      Pos('$', produtosList.Selected.Text) - 9
+      Pos('-', produtosList.Selected.Text) + 1,
+      Pos('$', produtosList.Selected.Text) - 7
     );
 
     result.Preco := StrToFloat(Copy(
@@ -198,7 +206,8 @@ end;
 
 procedure TprincipalFrm.produtosListDblClick(Sender: TObject);
 begin
-  if (produtosList.Selected.Text <> '') then
+  if (produtosList.Selected.Text <> '') and
+     (Pos('-', produtosList.Selected.Text) > 0) then
   begin
     produtoSelecionado := getProdutoLista(produtosList.Selected.Text);
 
@@ -255,12 +264,15 @@ begin
     nomeEdt.SetFocus;
     novaContaBtn.Enabled := false;
     itensList.Items.Add(
-      completarComEspacos('Item', 26)
-      + completarComEspacos('Qtd', 8)
+      completarComEspacos('Item', 22)
+      + completarComEspacos('Qtd', 10)
       + completarComEspacos('Valor R$', 10)
     );
     total := 0;
     atualizarTotal();
+    cancelarBtn.Enabled := true;
+    salvarBtn.Enabled := true;
+    itensList.Enabled := true;
   end;
 end;
 
